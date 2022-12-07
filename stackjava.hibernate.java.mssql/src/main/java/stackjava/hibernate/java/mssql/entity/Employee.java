@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,5 +40,6 @@ public class Employee implements Serializable {
 	private String name;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+	@Cascade(value = {org.hibernate.annotations.CascadeType.REMOVE})
 	private List<Account> accounts;
 }
