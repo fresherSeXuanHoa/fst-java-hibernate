@@ -16,5 +16,6 @@
 		<property name="show_sql">true</property>
 
 		<mapping class="stackjava.hibernate.java.mssql.entity.Account" />
+		<mapping class="stackjava.hibernate.java.mssql.entity.Employee" />
 	</session-factory>
 </hibernate-configuration>

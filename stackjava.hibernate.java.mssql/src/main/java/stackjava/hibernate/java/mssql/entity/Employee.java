@@ -1,14 +1,15 @@
 package stackjava.hibernate.java.mssql.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -22,10 +23,10 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Table(name = "account")
-public class Account implements Serializable {
+@Table(name = "employee")
+public class Employee implements Serializable {
 
-	private static final long serialVersionUID = -4590544105571975582L;
+	private static final long serialVersionUID = -747378980940342145L;
 
 	@Id
 	@Column(name = "id")
@@ -33,19 +34,9 @@ public class Account implements Serializable {
 	private Long id;
 
 	@NonNull
-	@Column(name = "username")
-	private String username;
+	@Column(name = "name")
+	private String name;
 
-	@NonNull
-	@Column(name = "password")
-	private String password;
-
-	@NonNull
-	@Column(name = "fullname")
-	private String fullName;
-
-	@NonNull
-	@ManyToOne
-	@JoinColumn(name = "employee")
-	private Employee employee;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+	private List<Account> accounts;
 }
