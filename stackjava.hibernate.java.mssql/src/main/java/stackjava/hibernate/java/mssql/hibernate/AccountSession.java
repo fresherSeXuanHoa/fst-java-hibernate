@@ -1,6 +1,10 @@
 package stackjava.hibernate.java.mssql.hibernate;
 
+import java.util.List;
+
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import stackjava.hibernate.java.mssql.entity.Account;
 import stackjava.hibernate.java.mssql.util.HibernateUtils;
@@ -26,9 +30,31 @@ public class AccountSession {
 		return null;
 	}
 
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<Account> findAll() {
+		try {
+			return session.createCriteria(Account.class).addOrder(Order.desc("username")).list();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
+	}
+
 	public Account findById(Long id) {
 		try {
 			return session.find(Account.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
+	}
+
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<Account> findByName(String name) {
+		try {
+			return session.createCriteria(Account.class).add(Restrictions.like("fullName", "%" + name + "%")).list();
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
